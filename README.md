@@ -1,15 +1,14 @@
 ## 前言
 
-​	这篇笔记是我在完成深度学习与神经网络课程设计时所记录下的，其中不乏有许多错误之处，如有问题的地方或者不理解的地方，可以及时联系我。另外我会非常乐意与大家交流分享一些技术上的知识，此篇博客完整代码我将会放在我的Github上，有需要请自取哈。
-github公式图片有些许问题，代码描述移步至[卷积神经网络](http://echoself.com/index.php/2023/05/24/82/)
+这篇笔记是我在完成深度学习与神经网络课程设计时所记录下的，其中不乏有许多错误之处，如有问题的地方或者不理解的地方，可以及时联系我。另外我会非常乐意与大家交流分享一些技术上的知识，[此篇博客](http://echoself.com/index.php/2023/05/24/82/)完整代码我将会放在我的[Github](https://github.com/Heappp/CNN-FashionMNIST/tree/main)上，有需要请自取哈。
 
 ## 包括内容
 
-​	卷积神经网络（Convolutional Neural Network，CNN）是一种前馈神经网络，主要应用于图像、语音等领域的特征提取和分类任务。卷积神经网络的核心思想是通过卷积操作从输入数据中提取出关键的特征，并使用这些特征来识别和分类输入数据。
+卷积神经网络（Convolutional Neural Network，CNN）是一种前馈神经网络，主要应用于图像、语音等领域的特征提取和分类任务。卷积神经网络的核心思想是通过卷积操作从输入数据中提取出关键的特征，并使用这些特征来识别和分类输入数据。
 
-​	卷积神经网络由多个层组成，包括卷积层、池化层和全连接层。其中，卷积层用来提取输入数据中的特征，池化层则可以减小特征图的大小并降低计算量，全连接层则用于对特征进行分类或回归等操作。
+卷积神经网络由多个层组成，包括卷积层、池化层和全连接层。其中，卷积层用来提取输入数据中的特征，池化层则可以减小特征图的大小并降低计算量，全连接层则用于对特征进行分类或回归等操作。
 
-​	为此，基于几种基本的卷积神经网络模型，利用pytorch框架自带的基本FashionMNIST数据集，实现多分类问题，以下是本文需要解决的问题如下：
+为此，基于几种基本的卷积神经网络模型，利用pytorch框架自带的基本FashionMNIST数据集，实现多分类问题，以下是本文需要解决的问题如下：
 
 - Fashion MNIST数据集介绍；
 - LeNet卷积神经网络的实现，并尝试对比修改其结构所产生的不同结果；
@@ -17,9 +16,9 @@ github公式图片有些许问题，代码描述移步至[卷积神经网络](ht
 
 ## FashionMNIST
 
-​	Fashion MNIST数据集是一个用于衣服图像分类的数据集，与手写数字的MNIST数据集类似，是机器学习领域常用的实验数据集之一。FashionMNIST数据集包含70000张28×28像素的灰度图像，共分为10个类别，每个类别有6000张训练图像和1000张测试图像。这10个类别包括：T-shirt/top （T恤）、Trouser （裤子）、Pullover （套衫）、Dress （连衣裙）、Coat （外套）、Sandal （凉鞋）、Shirt （衬衫）、Sneaker （运动鞋）、Bag （包）、Ankle boot （短靴）。本次一些基本的卷积神经网络均采用该数据集进行训练并进行对比。
+Fashion MNIST数据集是一个用于衣服图像分类的数据集，与手写数字的MNIST数据集类似，是机器学习领域常用的实验数据集之一。FashionMNIST数据集包含70000张28×28像素的灰度图像，共分为10个类别，每个类别有6000张训练图像和1000张测试图像。这10个类别包括：T-shirt/top （T恤）、Trouser （裤子）、Pullover （套衫）、Dress （连衣裙）、Coat （外套）、Sandal （凉鞋）、Shirt （衬衫）、Sneaker （运动鞋）、Bag （包）、Ankle boot （短靴）。本次一些基本的卷积神经网络均采用该数据集进行训练并进行对比。
 
-​	在torchvision.datasets下可以直接获取该数据集，代码如下：
+在torchvision.datasets下可以直接获取该数据集，代码如下：
 
 ```python
 transform = transforms.Compose([
@@ -30,7 +29,7 @@ mnist_train = torchvision.datasets.FashionMNIST(root="./", train=True, transform
 mnist_test = torchvision.datasets.FashionMNIST(root="./", train=False, transform=transform, download=True)
 ```
 
-​	其中参数transform可以传入一些预处理操作，如改变图像大小、数据增强、数据归一化等。在其中我们可以利用以下代码查看该数据集的一些基本信息。需要注意的是进行Resize((224, 224))之后图像大小似乎并没有立刻发生改变，那是因为好像其中有一种惰性机制的存在，此时并没有进行实际的变换操作，只是记录了一个变换序列。这种惰性计算的机制可以有效地降低内存占用，提高代码效率，特别是当处理大量数据时。
+其中参数transform可以传入一些预处理操作，如改变图像大小、数据增强、数据归一化等。在其中我们可以利用以下代码查看该数据集的一些基本信息。需要注意的是进行Resize((224, 224))之后图像大小似乎并没有立刻发生改变，那是因为好像其中有一种惰性机制的存在，此时并没有进行实际的变换操作，只是记录了一个变换序列。这种惰性计算的机制可以有效地降低内存占用，提高代码效率，特别是当处理大量数据时。
 
 ```python
 print(mnist_train.data.shape, mnist_test.data.shape)
@@ -47,17 +46,18 @@ print(mnist_train.classes)
 
 ​	LeNet是一种经典的卷积神经网络模型，是深度学习领域的开山之作。它由Yann LeCun教授等人在1998年提出，用于手写数字识别任务，成为了当时机器学习研究中非常重要的模型，LeNet的结构图如下图所示。
 
-<img src="save\LeNet.png" style="zoom:60%;" />
+<center>
+<img src="save/LeNet.png" style="zoom:60%;" />
+</center>
 
 ​	由以上结构图可以看出输入图像大小为$1\times28\times28$即为单通道的图片，之后分别经过卷积层、池化层、全连接层后得到分类的输出。其图片从输入到输出依次经过以下卷积层和全连接层。以下为图像卷积前后大小计算公式，其中p为padding_size，k为kennel_size，s为stride，除法为整除计算。
+
 $$
 x'=\frac{x+2\times p-k}{s}+1
 $$
 
 - 首先通过大小为6个$k=5,s=1,p=2$的卷积可以得到$6\times28\times28$的特征图，再经过大小为$k=2,s=2,p=0$的平均池化层可以得到$6\times14\times14$的特征图；
-
 - 同样地通过$6\times16$个$k=5,s=1,p=0$的卷积核可以得到$16\times10\times10$的特征图，再经过大小为$k=2,s=2,p=0$的平均池化层得到的$16\times5\times5$特征图；
-
 - 将特征图拉平后得到神经元数量为的全连接层，之后经过最后结果输出10个神经元；
 
 ​	LeNet的激活函数采用sigmoid函数、损失函数采用交叉熵损失函数，池化层采用平均池化。总体来说LeNet是结构还是非常简单的，但又是非常的经典。
@@ -171,13 +171,16 @@ torch.save(net.state_dict(), "save/LeNet.pt")
 #### 实验结果
 
 ​	启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对于原始的LeNet在FashionMNIST数据集上面已经有很好的效果，在选取学习率为1e-3和batch_size为64，迭代20次的情况下测试集的准确率能达到0.87，训练结果如下图所示。
-<center class="LeNet">
-<img src="save\Acc_LeNet.png" style="zoom:30%;" >
-<img src="save\Loss_LeNet.png" style="zoom:30%;" >
-</center>
+<table><tr>
+<td><img src=save/Acc_LeNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_LeNet.png style="zoom:60%;" align="left"></td>
+</tr></table>
+
+
 ​	另外我尝试修改其参数，包括学习率、batch_size、激活函数和迭代更多的次数，从以下的对比中好像可以看出合理调整超参数可以获得更好的效果。
 
-<table align="center" style="zoom:60%; height:50%; width:50%; text-align: center;">
+<center>
+    <table align="center" style="zoom:60%; height:50%; width:50%; text-align: center;">
     <tr>
         <td></td>
         <td>批大小</td>
@@ -244,14 +247,18 @@ torch.save(net.state_dict(), "save/LeNet.pt")
         <td>0.871</td>
         <td>0.857 </td>
     </tr>
-</table>  
+</table>
+</center>
+
 ## AlexNet
 
 #### 网络介绍
 
 ​	AlexNet是一个经典的卷积神经网络模型，其网络结构比较深，并且使用了一些现代神经网络中常用的技巧，如ReLU激活函数、Dropout正则化和数据增强等，相较于之前的神经网络更加有效。AlexNet包含8个层次：5个卷积和3个全连接层，AlexNet的结构图如下图所示。
 
-<img src="save\AlexNet.png" style="zoom:40%;" />
+<center>
+<img src="save/AlexNet.png" style="zoom:40%;" />
+</center>
 
 ​	由以上结构图可以看出输入图像大小为$3\times224\times224$即为3通道的图片，之后同样分别经过卷积层、池化层和全连接层后得到分类的输出。其中Alex的结构更宽、更深，并采取了最大池化替换平均池化，ReLU替换Sigmoid激活函数、添加Dropout正则化等方法，使得网络具有更强的拟合能力和泛化能力。
 
@@ -310,11 +317,10 @@ class AlexNet(nn.Module):
 
 ​	同样地启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对比于原始的LeNet已经有了很大的提升，在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.92，训练结果如下图所示。
 
-<center class="LeNet">
-<img src="save\Acc_AlexNet.png" style="zoom:60%;" >
-<img src="save\Loss_AlexNet.png" style="zoom:60%;" >
-</center>
-
+<table><tr>
+<td><img src=save/Acc_AlexNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_AlexNet.png style="zoom:60%;" align="left"></td>
+</tr></table>
 ## VGG
 
 #### 网络介绍
@@ -323,7 +329,9 @@ class AlexNet(nn.Module):
 
 ​	VGG相比于AlexNet引入VGG块的设计，每个VGG块都使用多个大小为$3\times3$的卷积核、$2\times2$的池化层组成。其中卷积操作改变通道数而不改变大小，池化操作改变大小而不改变通道数。尽管这样的设计使得VGG的参数数量非常庞大，但它的网络结构非常规整，有利于管理和调试。同时，它也通过使用大量卷积层和少量的池化层来增强网络对图片特征的提取能力。VGG结构图如下图所示。
 
-<img src="save\VGG.png" style="zoom:50%;" />
+<center>
+<img src="save/VGG.png" style="zoom:50%;" />
+</center>
 
 #### 代码实现
 
@@ -375,10 +383,13 @@ class VGG(nn.Module):
 
 ​	同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.93。相比于AlexNet，VGG明显的收敛速度更快，在第6、7次迭代就已经收敛，后面便是验证集loss上升的现象了。训练结果如下图所示。
 
-<center class="LeNet">
-<img src="save\Acc_VGG.png" style="zoom:58%;" >
-<img src="save\Loss_VGG.png" style="zoom:60%;" >
-</center>
+<table><tr>
+<td><img src=save/Acc_VGG.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_VGG.png style="zoom:62%;" align="left"></td>
+</tr></table>
+
+
+
 
 ## GoogleNet
 
@@ -388,11 +399,16 @@ class VGG(nn.Module):
 
 ​	首先GoogleNet引入了Inception模块，采用大小为1$\times1$、$3\times3$、$5\times5$的卷积核以及$3\times3$的最大池化共4个分别对图像进行特征提取，之后进行concat（拼接）操作作为Inception模块的输出。另外为了减少参数量和运算，其中添加了大小为$1\times1$的卷积进行通道过度以防止concat后通道数目爆炸，这样的设计能够结合不同卷积核大小的感受野，其结构图如下图所示。
 
-<img src="save\Inception.png" style="zoom:60%;" />
+<center>
+<img src="save/Inception.png" style="zoom:50%;" />
+</center>
+
 
 ​	其次GoogleNet最后使用了全局平均池化。其实卷积和池化的区别就是：卷积拥有训练的参数，梯度更新时自动学习特征，池化的参数是给定的，以至于池化并不能改变通道数目是因为池化只给定一套卷积参数。另外在浅层引入了辅助分类器，使得整个网络更快的收敛。整个GoogleNet结构图如下所示。
 
-![](save\GoogleNet.png)
+<center>
+<img src="save/GoogleNEt.png" style="zoom:50%;" />
+</center>
 
 #### 代码实现
 
@@ -515,10 +531,13 @@ loss = loss_function(y, label)
 
 ​	同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签（平滑标签就是在计算交叉熵损失时从正确标签那里分配一点给其它错误标签，比如不平滑时用[0, 1, 0]在计算交叉熵，而平滑标签后用[0.1, 0.8, 0.1]计算交叉熵，这样可以增强泛化能力），迭代20次的情况下测试集的准确率能达到0.9412。由于训练过程的损失为三个损失的和，所以训练结果长这样..,(懒的再训练一次)，训练结果如下图所示。
 
-<center class="LeNet">
-<img src="save\Acc_GoogleNet.png" style="zoom:60%;" >
-<img src="save\Loss_GoogleNet.png" style="zoom:60%;" >
-</center>
+<table><tr>
+<td><img src=save/Acc_GoogleNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_GoogleNet.png style="zoom:60%;" align="left"></td>
+</tr></table>
+
+
+
 
 ## ResNet
 
@@ -528,25 +547,33 @@ loss = loss_function(y, label)
 
 ​	考虑这样一个问题：网络的深度很大程度上决定了这个网络的学习能力，但是网络深度太大时多余的深度就需要学习恒等变换即$f(x)=x$保证结果和最理想深度结果一样，这样的累计导致深层的网络不如浅层的网络即网络退化现象。而添加残差块将学习$f(x)=x$变为$f(x)=x + g(x)$即网络部分只用学习$g(x)=0$即可，而学习$g(x)=0$比学习$f(x)=x$对于网络来说简单许多。残差块如下图所示。
 
-<img src="save\Residual.png" style="zoom:50%;" />
+<center>
+<img src="save/Residual.png" style="zoom:60%;" />
+</center>
 
 ​	另外，ResNet还采用了批处理标准化（Batch Normalization）技术，大大加速网络的训练过程。这种技术可以使输入数据在经过卷积操作后保持零均值和单位方差，从而加速了网络的收敛过程。此外，ResNet也对网络的层数进行了深度拓展，并通过使用平均池化层代替全连接层来减少了网络中的参数数量，从而进一步提高了模型的性能。
 
 为什么批归一化有效果？在神经网络的训练过程当中，虽然输入的数据取至同一分布，但是经过一层神经网络之后分布会发生改变，导致网络难以训练。但是我们若进行批归一化保证每一批的特征来自同一分布有助于网络的训练。一般我们采取如下公式进行归一化：
+
 $$
-x_{norm}=\frac{x-x_{mean}}{x_{std}}
+x_{norm}=\frac{x-x_mean }{x_std }
 $$
+
 ​	其中我们为了提高BN的表达能力，添加了两个学习参数γ和β，这样可以在分布变化不大的前提下提高网络的表达能力。所以最后公式为：
+
 $$
 x'=\gamma x_{norm}+\beta
 $$
+
 ​	另外归一化当中的批次N，对于每一个C、H、W都进行一次归一化，这样我们会得到$2\times C\times H\times W$个学习参数，参数太多了。所以我们将N、H、W放一起看待,对于每一个通道C再进行归一化，这样所需要学习的参数量减少为$2\times C$（权值共享)。
 
 #### 代码实现
 
 ​	首先定义残差块，如下图，其中op为当通道数改变时，x项要进行通道变换的选项，stride用于减少特征图大小。这样的设计可以使得残差块可以自由的改变通道数和特征图大小（相加时要保证通道数和特征图大小保持一致），残差块代码如下所示。
 
-<img src="save\Residual_op.png" style="zoom: 40%;" />
+<center>
+<img src="save/Residual_op.png" style="zoom: 40%;" />
+</center>
 
 ```python
 class ResNetBlock(nn.Module):
@@ -576,8 +603,9 @@ class ResNetBlock(nn.Module):
 ```
 
 ​	之后定义ResNet，其结构图如下，和Google一样通过$7\times7$的卷积核最大池化先缩小特征图大小，之后经过8个残差块再接全连接层之后得到输出，其中分别在3、5、7个分别传入op=True和stride=(2, 2)使得通道数倍增和特征图大小倍减，代码如下。
-
-<img src="save\ResNet.png" style="zoom:60%;" />
+<center>
+<img src="save/ResNet.png" style="zoom:60%;" />
+</center>
 
 ```python
 class ResNet(nn.Module):
@@ -619,10 +647,13 @@ class ResNet(nn.Module):
 
 ​	同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签，迭代20次的情况下测试集的准确率能达到0.9434,与前面网络有些许提升（差不多）。训练结果如下图所示。
 
-<center class="LeNet">
-<img src="save\Acc_ResNet.png" style="zoom:60%;" >
-<img src="save\Loss_ResNet.png" style="zoom:60%;" >
-</center>
+<table><tr>
+<td><img src=save/Acc_ResNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_ResNet.png style="zoom:60%;" align="left"></td>
+</tr></table>
+
+
+
 
 ## DenseNet
 
@@ -630,11 +661,17 @@ class ResNet(nn.Module):
 
 ​	DenseNet，全名为Densely Connected Convolutional Network，是由李沐等人在2017年提出的深度卷积神经网络模型。DenseNet主要通过密集连接和特征复用来缓解神经网络中的梯度消失和参数稀疏性等问题，让网络更加高效并具有更好的泛化能力。相对于ResNet的残差块的直接相加，DenseNet采用concat以学习更复杂的映射关系，其结构图如下图所示。
 
-![](save\DenseNetBlock.png)
+<center>
+<img src="save/DenseNetBlock.png" style="zoom:80%;" />
+</center>
+
 
 #### 代码实现
 
-<img src="save\DenseNet.png" style="zoom:50%;" />
+<center>
+<img src="save/DenseNet.png" style="zoom:40%;" />
+</center>
+
 
 ​	同样地，我们首先定义稠密层DenseBlock。如上图，它通过不断的卷积为通道数为32大小的特征图，同时不断concat（拼接）到原来输入的特征图上面。通过控制输入通道，输出通道和累加次数即可确定最终输出的通道数，这个过程并不改变特征图大小。在代码中通过实现DenseLayer来卷积出一个out_channels的特征图，其中有一个特点就是采用BN+ReLU+Conv，如果我们采用Conv+ReLU+BN的顺序，在concat（拼接）过程当中会导致两者批归一化不一致，相反交换顺序则不会有这样的问题。
 
@@ -723,10 +760,13 @@ class DenseNet(nn.Module):
 
 ​	同样在选取学习率为1e-3和batch_size为64，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签，迭代20次的情况下测试集的准确率能达到0.9431，和ResNet的准确率几乎一样。训练结果如下图所示。
 
-<center class="LeNet">
-<img src="save\Acc_DenseNet.png" style="zoom:57%;" >
-<img src="save\Loss_DenseNet.png" style="zoom:60%;" >
-</center>
+<table><tr>
+<td><img src=save/Acc_DenseNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_DenseNet.png style="zoom:63%;" align="left"></td>
+</tr></table>
+
+
+
 
 ## 总结
 
@@ -735,5 +775,3 @@ class DenseNet(nn.Module):
 ​	LeNet和AlexNet是最早的深度学习模型之一，经典卷积神经网络是深度学习发展过程中的重要里程碑。VGG通过使用小尺寸卷积核来提高模型性能，为后面的网络模型提供了可参考的设计思路。GoogLeNet引入了Inception模块，使得模型结构具备了很好的可扩展性。ResNet则通过残差连接解决了深度神经网络训练中梯度消失和退化问题，在各种计算机视觉任务中表现优异。DenseNet相比于其他模型所具有的特点是其网络中的特征图可以访问到过去所有层的信息，从而极大地促进信息的传递与利用，增强了模型的表达能力和稳定性。
 
 ​	总的来说，这些经典卷积神经网络可以帮助我们在设计新的卷积神经网络时可以借鉴他们的经验，尝试改进模型结构、激活函数、正则化等方法以提高性能和泛化能力。No free lunch，这些卷积神经网络都有自己的特点，说不定在某些数据集上VGG的效果可能高于后面的网络。神经网络有太多的参数可以调整，每次调整效果可能大不相同，这也是被称为“炼丹”的原因。在设计自己的卷积神经网络的时候，完全可以借鉴这些神经网络优秀的地方，根据自己特定的数据集，以达到最好的效果，并不说一定与这些网络完全一样。
-
-​	
