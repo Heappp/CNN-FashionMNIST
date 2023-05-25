@@ -172,8 +172,8 @@ torch.save(net.state_dict(), "save/LeNet.pt")
 
 ​	启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对于原始的LeNet在FashionMNIST数据集上面已经有很好的效果，在选取学习率为1e-3和batch_size为64，迭代20次的情况下测试集的准确率能达到0.87，训练结果如下图所示。
 <center class="LeNet">
-<img src="D:\Document\YFY\markdown\深度学习\image\Acc_LeNet.png" style="zoom:60%;" >
-<img src="D:\Document\YFY\markdown\深度学习\image\Loss_LeNet.png" style="zoom:60%;" >
+<img src="save\Acc_LeNet.png" style="zoom:60%;" >
+<img src="save\Loss_LeNet.png" style="zoom:60%;" >
 </center>
 ​	另外我尝试修改其参数，包括学习率、batch_size、激活函数和迭代更多的次数，从以下的对比中好像可以看出合理调整超参数可以获得更好的效果。
 
@@ -257,7 +257,7 @@ torch.save(net.state_dict(), "save/LeNet.pt")
 
 ​	AlexNet是一个经典的卷积神经网络模型，其网络结构比较深，并且使用了一些现代神经网络中常用的技巧，如ReLU激活函数、Dropout正则化和数据增强等，相较于之前的神经网络更加有效。AlexNet包含8个层次：5个卷积和3个全连接层，AlexNet的结构图如下图所示。
 
-<img src="D:\Document\YFY\markdown\深度学习\image\AlexNet.png" style="zoom:40%;" />
+<img src="save\AlexNet.png" style="zoom:40%;" />
 
 ​	由以上结构图可以看出输入图像大小为$3\times224\times224$即为3通道的图片，之后同样分别经过卷积层、池化层和全连接层后得到分类的输出。其中Alex的结构更宽、更深，并采取了最大池化替换平均池化，ReLU替换Sigmoid激活函数、添加Dropout正则化等方法，使得网络具有更强的拟合能力和泛化能力。
 
@@ -317,8 +317,8 @@ class AlexNet(nn.Module):
 ​	同样地启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对比于原始的LeNet已经有了很大的提升，在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.92，训练结果如下图所示。
 
 <center class="LeNet">
-<img src="D:\Document\YFY\markdown\深度学习\image\Acc_AlexNet.png" style="zoom:60%;" >
-<img src="D:\Document\YFY\markdown\深度学习\image\Loss_AlexNet.png" style="zoom:60%;" >
+<img src="save\Acc_AlexNet.png" style="zoom:60%;" >
+<img src="save\Loss_AlexNet.png" style="zoom:60%;" >
 </center>
 
 ## VGG
@@ -329,7 +329,7 @@ class AlexNet(nn.Module):
 
 ​	VGG相比于AlexNet引入VGG块的设计，每个VGG块都使用多个大小为$3\times3$的卷积核、$2\times2$的池化层组成。其中卷积操作改变通道数而不改变大小，池化操作改变大小而不改变通道数。尽管这样的设计使得VGG的参数数量非常庞大，但它的网络结构非常规整，有利于管理和调试。同时，它也通过使用大量卷积层和少量的池化层来增强网络对图片特征的提取能力。VGG结构图如下图所示。
 
-<img src="D:\Document\YFY\markdown\深度学习\image\VGG.png" style="zoom:50%;" />
+<img src="save\VGG.png" style="zoom:50%;" />
 
 #### 代码实现
 
@@ -382,8 +382,8 @@ class VGG(nn.Module):
 ​	同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.93。相比于AlexNet，VGG明显的收敛速度更快，在第6、7次迭代就已经收敛，后面便是验证集loss上升的现象了。训练结果如下图所示。
 
 <center class="LeNet">
-<img src="D:\Document\YFY\markdown\深度学习\image\Acc_VGG.png" style="zoom:58%;" >
-<img src="D:\Document\YFY\markdown\深度学习\image\Loss_VGG.png" style="zoom:60%;" >
+<img src="save\Acc_VGG.png" style="zoom:58%;" >
+<img src="save\Loss_VGG.png" style="zoom:60%;" >
 </center>
 
 ## GoogleNet
@@ -394,11 +394,11 @@ class VGG(nn.Module):
 
 ​	首先GoogleNet引入了Inception模块，采用大小为1$\times1$、$3\times3$、$5\times5$的卷积核以及$3\times3$的最大池化共4个分别对图像进行特征提取，之后进行concat（拼接）操作作为Inception模块的输出。另外为了减少参数量和运算，其中添加了大小为$1\times1$的卷积进行通道过度以防止concat后通道数目爆炸，这样的设计能够结合不同卷积核大小的感受野，其结构图如下图所示。
 
-<img src="D:\Document\YFY\markdown\深度学习\image\Inception.png" style="zoom:60%;" />
+<img src="save\Inception.png" style="zoom:60%;" />
 
 ​	其次GoogleNet最后使用了全局平均池化。其实卷积和池化的区别就是：卷积拥有训练的参数，梯度更新时自动学习特征，池化的参数是给定的，以至于池化并不能改变通道数目是因为池化只给定一套卷积参数。另外在浅层引入了辅助分类器，使得整个网络更快的收敛。整个GoogleNet结构图如下所示。
 
-![](D:\Document\YFY\markdown\深度学习\image\GoogleNet.png)
+![](save\GoogleNet.png)
 
 #### 代码实现
 
@@ -522,8 +522,8 @@ loss = loss_function(y, label)
 ​	同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签（平滑标签就是在计算交叉熵损失时从正确标签那里分配一点给其它错误标签，比如不平滑时用[0, 1, 0]在计算交叉熵，而平滑标签后用[0.1, 0.8, 0.1]计算交叉熵，这样可以增强泛化能力），迭代20次的情况下测试集的准确率能达到0.9412。由于训练过程的损失为三个损失的和，所以训练结果长这样..,(懒的再训练一次)，训练结果如下图所示。
 
 <center class="LeNet">
-<img src="D:\Document\YFY\markdown\深度学习\image\Acc_GoogleNet.png" style="zoom:60%;" >
-<img src="D:\Document\YFY\markdown\深度学习\image\Loss_GoogleNet.png" style="zoom:60%;" >
+<img src="save\Acc_GoogleNet.png" style="zoom:60%;" >
+<img src="save\Loss_GoogleNet.png" style="zoom:60%;" >
 </center>
 
 ## ResNet
@@ -534,7 +534,7 @@ loss = loss_function(y, label)
 
 ​	考虑这样一个问题：网络的深度很大程度上决定了这个网络的学习能力，但是网络深度太大时多余的深度就需要学习恒等变换即$f(x)=x$保证结果和最理想深度结果一样，这样的累计导致深层的网络不如浅层的网络即网络退化现象。而添加残差块将学习$f(x)=x$变为$f(x)=x + g(x)$即网络部分只用学习$g(x)=0$即可，而学习$g(x)=0$比学习$f(x)=x$对于网络来说简单许多。残差块如下图所示。
 
-<img src="D:\Document\YFY\markdown\深度学习\image\Residual.png" style="zoom:50%;" />
+<img src="save\Residual.png" style="zoom:50%;" />
 
 ​	另外，ResNet还采用了批处理标准化（Batch Normalization）技术，大大加速网络的训练过程。这种技术可以使输入数据在经过卷积操作后保持零均值和单位方差，从而加速了网络的收敛过程。此外，ResNet也对网络的层数进行了深度拓展，并通过使用平均池化层代替全连接层来减少了网络中的参数数量，从而进一步提高了模型的性能。
 
@@ -552,7 +552,7 @@ $$
 
 ​	首先定义残差块，如下图，其中op为当通道数改变时，x项要进行通道变换的选项，stride用于减少特征图大小。这样的设计可以使得残差块可以自由的改变通道数和特征图大小（相加时要保证通道数和特征图大小保持一致），残差块代码如下所示。
 
-<img src="D:\Document\YFY\markdown\深度学习\image\Residual_op.png" style="zoom: 40%;" />
+<img src="save\Residual_op.png" style="zoom: 40%;" />
 
 ```python
 class ResNetBlock(nn.Module):
@@ -583,7 +583,7 @@ class ResNetBlock(nn.Module):
 
 ​	之后定义ResNet，其结构图如下，和Google一样通过$7\times7$的卷积核最大池化先缩小特征图大小，之后经过8个残差块再接全连接层之后得到输出，其中分别在3、5、7个分别传入op=True和stride=(2, 2)使得通道数倍增和特征图大小倍减，代码如下。
 
-<img src="D:\Document\YFY\markdown\深度学习\image\ResNet.png" style="zoom:60%;" />
+<img src="save\ResNet.png" style="zoom:60%;" />
 
 ```python
 class ResNet(nn.Module):
@@ -626,8 +626,8 @@ class ResNet(nn.Module):
 ​	同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签，迭代20次的情况下测试集的准确率能达到0.9434,与前面网络有些许提升（差不多）。训练结果如下图所示。
 
 <center class="LeNet">
-<img src="D:\Document\YFY\markdown\深度学习\image\Acc_ResNet.png" style="zoom:60%;" >
-<img src="D:\Document\YFY\markdown\深度学习\image\Loss_ResNet.png" style="zoom:60%;" >
+<img src="save\Acc_ResNet.png" style="zoom:60%;" >
+<img src="save\Loss_ResNet.png" style="zoom:60%;" >
 </center>
 
 ## DenseNet
@@ -636,11 +636,11 @@ class ResNet(nn.Module):
 
 ​	DenseNet，全名为Densely Connected Convolutional Network，是由李沐等人在2017年提出的深度卷积神经网络模型。DenseNet主要通过密集连接和特征复用来缓解神经网络中的梯度消失和参数稀疏性等问题，让网络更加高效并具有更好的泛化能力。相对于ResNet的残差块的直接相加，DenseNet采用concat以学习更复杂的映射关系，其结构图如下图所示。
 
-![](D:\Document\YFY\markdown\深度学习\image\DenseNetBlock.png)
+![](save\DenseNetBlock.png)
 
 #### 代码实现
 
-<img src="D:\Document\YFY\markdown\深度学习\image\DenseNet.png" style="zoom:50%;" />
+<img src="save\DenseNet.png" style="zoom:50%;" />
 
 ​	同样地，我们首先定义稠密层DenseBlock。如上图，它通过不断的卷积为通道数为32大小的特征图，同时不断concat（拼接）到原来输入的特征图上面。通过控制输入通道，输出通道和累加次数即可确定最终输出的通道数，这个过程并不改变特征图大小。在代码中通过实现DenseLayer来卷积出一个out_channels的特征图，其中有一个特点就是采用BN+ReLU+Conv，如果我们采用Conv+ReLU+BN的顺序，在concat（拼接）过程当中会导致两者批归一化不一致，相反交换顺序则不会有这样的问题。
 
@@ -730,8 +730,8 @@ class DenseNet(nn.Module):
 ​	同样在选取学习率为1e-3和batch_size为64，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签，迭代20次的情况下测试集的准确率能达到0.9431，和ResNet的准确率几乎一样。训练结果如下图所示。
 
 <center class="LeNet">
-<img src="D:\Document\YFY\markdown\深度学习\image\Acc_DenseNet.png" style="zoom:57%;" >
-<img src="D:\Document\YFY\markdown\深度学习\image\Loss_DenseNet.png" style="zoom:60%;" >
+<img src="save\Acc_DenseNet.png" style="zoom:57%;" >
+<img src="save\Loss_DenseNet.png" style="zoom:60%;" >
 </center>
 
 ## 总结
