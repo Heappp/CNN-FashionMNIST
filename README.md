@@ -47,7 +47,7 @@ print(mnist_train.classes)
 
 ​	LeNet是一种经典的卷积神经网络模型，是深度学习领域的开山之作。它由Yann LeCun教授等人在1998年提出，用于手写数字识别任务，成为了当时机器学习研究中非常重要的模型，LeNet的结构图如下图所示。
 
-<img src="D:\Document\YFY\markdown\深度学习\image\LeNet.png" style="zoom:60%;" />
+<img src="save\LeNet.png" style="zoom:60%;" />
 
 ​	由以上结构图可以看出输入图像大小为$1\times28\times28$即为单通道的图片，之后分别经过卷积层、池化层、全连接层后得到分类的输出。其图片从输入到输出依次经过以下卷积层和全连接层。以下为图像卷积前后大小计算公式，其中p为padding_size，k为kennel_size，s为stride，除法为整除计算。
 $$
