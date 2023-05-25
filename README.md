@@ -172,8 +172,8 @@ torch.save(net.state_dict(), "save/LeNet.pt")
 
 ​	启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对于原始的LeNet在FashionMNIST数据集上面已经有很好的效果，在选取学习率为1e-3和batch_size为64，迭代20次的情况下测试集的准确率能达到0.87，训练结果如下图所示。
 <center class="LeNet">
-<img src="save\Acc_LeNet.png" style="zoom:60%;" >
-<img src="save\Loss_LeNet.png" style="zoom:60%;" >
+<img src="save\Acc_LeNet.png" style="zoom:30%;" >
+<img src="save\Loss_LeNet.png" style="zoom:30%;" >
 </center>
 ​	另外我尝试修改其参数，包括学习率、batch_size、激活函数和迭代更多的次数，从以下的对比中好像可以看出合理调整超参数可以获得更好的效果。
 
@@ -188,7 +188,6 @@ torch.save(net.state_dict(), "save/LeNet.pt")
         <td>测试集损失</td>
         <td>训练集准确率</td>
         <td>测试集准确率 </td>
-        <td></td>
     </tr>
     <tr>
         <td>0</td>
@@ -200,7 +199,6 @@ torch.save(net.state_dict(), "save/LeNet.pt")
         <td>0.426</td>
         <td>0.86</td>
         <td>0.846 </td>
-        <td></td>
     </tr>
     <tr>
         <td>1</td>
@@ -212,7 +210,6 @@ torch.save(net.state_dict(), "save/LeNet.pt")
         <td>0.336</td>
         <td>0.8875</td>
         <td>0.8769 </td>
-        <td></td>
     </tr>
     <tr>
         <td>2</td>
@@ -224,7 +221,6 @@ torch.save(net.state_dict(), "save/LeNet.pt")
         <td>0.423</td>
         <td>0.905</td>
         <td>0.88 </td>
-        <td></td>
     </tr>
     <tr>
         <td>3</td>
@@ -236,7 +232,6 @@ torch.save(net.state_dict(), "save/LeNet.pt")
         <td>0.337</td>
         <td>0.898</td>
         <td>0.8767 </td>
-        <td></td>
     </tr>
     <tr>
         <td>4</td>
@@ -248,7 +243,6 @@ torch.save(net.state_dict(), "save/LeNet.pt")
         <td>0.387</td>
         <td>0.871</td>
         <td>0.857 </td>
-        <td></td>
     </tr>
 </table>  
 ## AlexNet
