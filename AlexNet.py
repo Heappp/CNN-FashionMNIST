@@ -69,7 +69,7 @@ scheduler = lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)
 my_writer = SummaryWriter("tf-logs")
 
 epoch = 20
-batch_size = 128
+batch_size = 256
 
 train_dataloader = DataLoader(mnist_train, batch_size=batch_size, shuffle=True, drop_last=False)
 test_dataloader = DataLoader(mnist_test, batch_size=batch_size, shuffle=True, drop_last=False)
