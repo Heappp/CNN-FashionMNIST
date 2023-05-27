@@ -53,7 +53,7 @@ optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
 my_writer = SummaryWriter("tf-logs")
 
 epoch = 20
-batch_size = 64
+batch_size = 256
 
 train_dataloader = DataLoader(mnist_train, batch_size=batch_size, shuffle=True, drop_last=False)
 test_dataloader = DataLoader(mnist_test, batch_size=batch_size, shuffle=True, drop_last=False)
