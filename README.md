@@ -170,7 +170,7 @@ torch.save(net.state_dict(), "save/LeNet.pt")
 
 #### 实验结果
 
-​	启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对于原始的LeNet在FashionMNIST数据集上面已经有很好的效果，在选取学习率为1e-3和batch_size为64，迭代20次的情况下测试集的准确率能达到0.87，训练结果如下图所示。
+​	启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对于原始的LeNet在FashionMNIST数据集上面已经有很好的效果，在选取学习率为1e-3和batch_size为256，迭代20次的情况下测试集的准确率能达到0.87，训练结果如下图所示。
 <table><tr>
 <td><img src=save/Acc_LeNet.png style="zoom:60%;" align="right"></td>
 <td><img src=save/Loss_LeNet.png style="zoom:60%;" align="left"></td>
@@ -315,7 +315,7 @@ class AlexNet(nn.Module):
 
 #### 实验结果
 
-​	同样地启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对比于原始的LeNet已经有了很大的提升，在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.92，训练结果如下图所示。
+​	同样地启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对比于原始的LeNet已经有了很大的提升，在选取学习率为1e-3和batch_size为256，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.92，训练结果如下图所示。
 
 <table><tr>
 <td><img src=save/Acc_AlexNet.png style="zoom:60%;" align="right"></td>
