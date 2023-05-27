@@ -32,7 +32,6 @@ class LeNet(nn.Module):
         )
         self.fc3 = nn.Sequential(
             nn.Linear(84, 10),
-            nn.Sigmoid(),
         )
 
     def forward(self, x):
