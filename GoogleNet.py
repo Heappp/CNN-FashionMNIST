@@ -94,7 +94,6 @@ class GoogleNet(nn.Module):
             nn.AdaptiveAvgPool2d(output_size=(1, 1)),
             nn.Flatten(),
             nn.Linear(1024, 10),
-            nn.ReLU()
         )
 
     def forward(self, x):
