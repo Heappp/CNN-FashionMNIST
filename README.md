@@ -532,7 +532,7 @@ loss = loss_function(y, label)
 
 <table><tr>
 <td><img src=save/Acc_GoogleNet.png style="zoom:60%;" align="right"></td>
-<td><img src=save/Loss_GoogleNet.png style="zoom:60%;" align="left"></td>
+<td><img src=save/Loss_GoogleNEt.png style="zoom:60%;" align="left"></td>
 </tr></table>
 
 
