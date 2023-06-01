@@ -318,8 +318,9 @@ class AlexNet(nn.Module):
 
 <table><tr>
 <td><img src=save/Acc_AlexNet.png style="zoom:60%;" align="right"></td>
-<td><img src=save/2023/05/Loss_AlexNet.png style="zoom:60%;" align="left"></td>
+<td><img src=save/Loss_AlexNet.png style="zoom:60%;" align="left"></td>
 </tr></table>
+
 ## VGG
 
 #### 网络介绍
