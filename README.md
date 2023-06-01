@@ -603,7 +603,7 @@ class ResNetBlock(nn.Module):
 
 之后定义ResNet，其结构图如下，和Google一样通过$7\times7$的卷积核最大池化先缩小特征图大小，之后经过8个残差块再接全连接层之后得到输出，其中分别在3、5、7个分别传入op=True和stride=(2, 2)使得通道数倍增和特征图大小倍减，代码如下。
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/ResNet.png" style="zoom:60%;" />
+<img src="save/ResNet.png" style="zoom:60%;" />
 </center>
 
 ```python
