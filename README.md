@@ -47,7 +47,7 @@ print(mnist_train.classes)
 LeNet是一种经典的卷积神经网络模型，是深度学习领域的开山之作。它由Yann LeCun教授等人在1998年提出，用于手写数字识别任务，成为了当时机器学习研究中非常重要的模型，LeNet的结构图如下图所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/LeNet.png" style="zoom:60%;" />
+<img src="save/LeNet.png" style="zoom:60%;" />
 </center>
 
 由以上结构图可以看出输入图像大小为$1\times28\times28$即为单通道的图片，之后分别经过卷积层、池化层、全连接层后得到分类的输出。其图片从输入到输出依次经过以下卷积层和全连接层。以下为图像卷积前后大小计算公式，其中p为padding_size，k为kennel_size，s为stride，除法为整除计算。
@@ -171,8 +171,8 @@ torch.save(net.state_dict(), "save/LeNet.pt")
 
 启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对于原始的LeNet在FashionMNIST数据集上面已经有很好的效果，在选取学习率为1e-3和batch_size为256，迭代20次的情况下测试集的准确率能达到0.87，训练结果如下图所示。
 <table><tr>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Acc_LeNet.png style="zoom:60%;" align="right"></td>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Loss_LeNet.png style="zoom:60%;" align="left"></td>
+<td><img src=save/Acc_LeNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_LeNet.png style="zoom:60%;" align="left"></td>
 </tr></table>
 
 
@@ -256,7 +256,7 @@ torch.save(net.state_dict(), "save/LeNet.pt")
 AlexNet是一个经典的卷积神经网络模型，其网络结构比较深，并且使用了一些现代神经网络中常用的技巧，如ReLU激活函数、Dropout正则化和数据增强等，相较于之前的神经网络更加有效。AlexNet包含8个层次：5个卷积和3个全连接层，AlexNet的结构图如下图所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/AlexNet.png" style="zoom:40%;" />
+<img src="save/AlexNet.png" style="zoom:40%;" />
 </center>
 
 由以上结构图可以看出输入图像大小为$3\times224\times224$即为3通道的图片，之后同样分别经过卷积层、池化层和全连接层后得到分类的输出。其中Alex的结构更宽、更深，并采取了最大池化替换平均池化，ReLU替换Sigmoid激活函数、添加Dropout正则化等方法，使得网络具有更强的拟合能力和泛化能力。
@@ -317,8 +317,8 @@ class AlexNet(nn.Module):
 同样地启动运行后在Terminal输入 tensorboard --logdir="tf-logs" 就可以实时观察训练过程，输入ctrl+z可以退出。对比于原始的LeNet已经有了很大的提升，在选取学习率为1e-3和batch_size为256，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.92，训练结果如下图所示。
 
 <table><tr>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Acc_AlexNet.png style="zoom:60%;" align="right"></td>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Loss_AlexNet.png style="zoom:60%;" align="left"></td>
+<td><img src=save/Acc_AlexNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/2023/05/Loss_AlexNet.png style="zoom:60%;" align="left"></td>
 </tr></table>
 ## VGG
 
@@ -329,7 +329,7 @@ VGG的主要特点是使用了非常小的卷积核（尺寸为$3\times3$），�
 VGG相比于AlexNet引入VGG块的设计，每个VGG块都使用多个大小为$3\times3$的卷积核、$2\times2$的池化层组成。其中卷积操作改变通道数而不改变大小，池化操作改变大小而不改变通道数。尽管这样的设计使得VGG的参数数量非常庞大，但它的网络结构非常规整，有利于管理和调试。同时，它也通过使用大量卷积层和少量的池化层来增强网络对图片特征的提取能力。VGG结构图如下图所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/VGG.png" style="zoom:50%;" />
+<img src="save/VGG.png" style="zoom:50%;" />
 </center>
 
 #### 代码实现
@@ -383,8 +383,8 @@ class VGG(nn.Module):
 同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍，迭代20次的情况下测试集的准确率能达到0.93。相比于AlexNet，VGG明显的收敛速度更快，在第6、7次迭代就已经收敛，后面便是验证集loss上升的现象了。训练结果如下图所示。
 
 <table><tr>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Acc_VGG.png style="zoom:60%;" align="right"></td>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Loss_VGG.png style="zoom:62%;" align="left"></td>
+<td><img src=save/Acc_VGG.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_VGG.png style="zoom:62%;" align="left"></td>
 </tr></table>
 
 
@@ -399,14 +399,14 @@ GoogLeNet是由谷歌团队提出的深度卷积神经网络模型，该模型�
 首先GoogleNet引入了Inception模块，采用大小为1$\times1$、$3\times3$、$5\times5$的卷积核以及$3\times3$的最大池化共4个分别对图像进行特征提取，之后进行concat（拼接）操作作为Inception模块的输出。另外为了减少参数量和运算，其中添加了大小为$1\times1$的卷积进行通道过度以防止concat后通道数目爆炸，这样的设计能够结合不同卷积核大小的感受野，其结构图如下图所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/Inception.png" style="zoom:50%;" />
+<img src="save/Inception.png" style="zoom:50%;" />
 </center>
 
 
 其次GoogleNet最后使用了全局平均池化。其实卷积和池化的区别就是：卷积拥有训练的参数，梯度更新时自动学习特征，池化的参数是给定的，以至于池化并不能改变通道数目是因为池化只给定一套卷积参数。另外在浅层引入了辅助分类器，使得整个网络更快的收敛。整个GoogleNet结构图如下所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/GoogleNet.png" style="zoom:50%;" />
+<img src="save/GoogleNet.png" style="zoom:50%;" />
 </center>
 
 #### 代码实现
@@ -530,8 +530,8 @@ loss = loss_function(y, label)
 同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签（平滑标签就是在计算交叉熵损失时从正确标签那里分配一点给其它错误标签，比如不平滑时用[0, 1, 0]在计算交叉熵，而平滑标签后用[0.1, 0.8, 0.1]计算交叉熵，这样可以增强泛化能力），迭代20次的情况下测试集的准确率能达到0.9412。由于训练过程的损失为三个损失的和，所以训练结果长这样..,(懒的再训练一次)，训练结果如下图所示。
 
 <table><tr>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Acc_GoogleNet.png style="zoom:60%;" align="right"></td>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Loss_GoogleNet.png style="zoom:60%;" align="left"></td>
+<td><img src=save/Acc_GoogleNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_GoogleNet.png style="zoom:60%;" align="left"></td>
 </tr></table>
 
 
@@ -546,7 +546,7 @@ ResNet最显著的特点是通过添加残差模块，即Residual Block，实现
 考虑这样一个问题：网络的深度很大程度上决定了这个网络的学习能力，但是网络深度太大时多余的深度就需要学习恒等变换即$f(x)=x$保证结果和最理想深度结果一样，这样的累计导致深层的网络不如浅层的网络即网络退化现象。而添加残差块将学习$f(x)=x$变为$f(x)=x + g(x)$即网络部分只用学习$g(x)=0$即可，而学习$g(x)=0$比学习$f(x)=x$对于网络来说简单许多。残差块如下图所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/Residual.png" style="zoom:60%;" />
+<img src="save/Residual.png" style="zoom:60%;" />
 </center>
 
 另外，ResNet还采用了批处理标准化（Batch Normalization）技术，大大加速网络的训练过程。这种技术可以使输入数据在经过卷积操作后保持零均值和单位方差，从而加速了网络的收敛过程。此外，ResNet也对网络的层数进行了深度拓展，并通过使用平均池化层代替全连接层来减少了网络中的参数数量，从而进一步提高了模型的性能。
@@ -570,7 +570,7 @@ $$
 首先定义残差块，如下图，其中op为当通道数改变时，x项要进行通道变换的选项，stride用于减少特征图大小。这样的设计可以使得残差块可以自由的改变通道数和特征图大小（相加时要保证通道数和特征图大小保持一致），残差块代码如下所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/Residual_op.png" style="zoom: 40%;" />
+<img src="save/Residual_op.png" style="zoom: 40%;" />
 </center>
 
 ```python
@@ -646,8 +646,8 @@ class ResNet(nn.Module):
 同样在选取学习率为1e-3和batch_size为128，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签，迭代20次的情况下测试集的准确率能达到0.9434,与前面网络有些许提升（差不多）。训练结果如下图所示。
 
 <table><tr>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Acc_ResNet.png style="zoom:60%;" align="right"></td>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Loss_ResNet.png style="zoom:60%;" align="left"></td>
+<td><img src=save/Acc_ResNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_ResNet.png style="zoom:60%;" align="left"></td>
 </tr></table>
 
 
@@ -660,14 +660,14 @@ class ResNet(nn.Module):
 DenseNet全名为Densely Connected Convolutional Network，是由李沐等人在2017年提出的深度卷积神经网络模型。DenseNet主要通过密集连接和特征复用来缓解神经网络中的梯度消失和参数稀疏性等问题，让网络更加高效并具有更好的泛化能力。相对于ResNet的残差块的直接相加，DenseNet采用concat以学习更复杂的映射关系，其结构图如下图所示。
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/DenseNetBlock.png" style="zoom:80%;" />
+<img src="save/DenseNetBlock.png" style="zoom:80%;" />
 </center>
 
 
 #### 代码实现
 
 <center>
-<img src="http://echoself.com/wp-content/uploads/2023/05/DenseNet.png" style="zoom:40%;" />
+<img src="save/DenseNet.png" style="zoom:40%;" />
 </center>
 
 
@@ -759,8 +759,8 @@ class DenseNet(nn.Module):
 同样在选取学习率为1e-3和batch_size为64，每迭代一次学习率变为原来的0.9倍和0.2的平滑标签，迭代20次的情况下测试集的准确率能达到0.9431，和ResNet的准确率几乎一样。训练结果如下图所示。
 
 <table><tr>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Acc_DenseNet.png style="zoom:60%;" align="right"></td>
-<td><img src=http://echoself.com/wp-content/uploads/2023/05/Loss_DenseNet.png style="zoom:63%;" align="left"></td>
+<td><img src=save/Acc_DenseNet.png style="zoom:60%;" align="right"></td>
+<td><img src=save/Loss_DenseNet.png style="zoom:63%;" align="left"></td>
 </tr></table>
 
 
