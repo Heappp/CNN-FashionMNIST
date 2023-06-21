@@ -24,8 +24,11 @@ class AlexNet(nn.Module):
         )
         self.conv3 = nn.Sequential(
             nn.Conv2d(256, 384, kernel_size=(3, 3), stride=(1, 1), padding=1),
+            nn.ReLU(),
             nn.Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=1),
+            nn.ReLU(),
             nn.Conv2d(384, 256, kernel_size=(3, 3), stride=(1, 1), padding=1),
+            nn.ReLU(),
             nn.MaxPool2d(kernel_size=(3, 3), stride=(2, 2), padding=0)
         )
         self.fc1 = nn.Sequential(
